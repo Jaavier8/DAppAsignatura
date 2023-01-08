@@ -7,9 +7,11 @@ const SoyProfesor = ({children}) => {
     const {useCacheCall} = useDrizzle();
     const drizzleState = useDrizzleState(state => state);
 
-    const profesorAddr = useCacheCall("Asignatura", "profesor");
+    const connected = drizzleState.accounts[0];
 
-    if (profesorAddr !== drizzleState.accounts[0]) {
+    const isProfesor = useCacheCall("Asignatura", "datosProfesor", connected) !== "";
+
+    if (!isProfesor) {
         return null
     }
     return <>

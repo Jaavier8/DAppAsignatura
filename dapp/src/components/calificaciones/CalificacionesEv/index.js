@@ -1,17 +1,17 @@
 import CalificacionesHead from "./CalificacionesHead";
 import CalificacionesBody from "./CalificacionesBody";
 
-const CalificacionesPage = (props) => {
+const CalificacionesEv = () => {
 
     return (
         <section className="AppCalificaciones">
-            <h3>Todas las Calificaciones</h3>
+            <h3>Todas las Calificaciones de la Evaluacion</h3>
             <table>
                 <CalificacionesHead />
-                <CalificacionesBody onSetStudentDirection={props.onSetStudentDirection} onSetEvIndex={props.onSetEvIndex}/>
+                <CalificacionesBody />
             </table>
         </section>
     );
 };
 
-export default CalificacionesPage;
+export default CalificacionesEv;

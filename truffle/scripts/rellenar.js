@@ -11,33 +11,35 @@ module.exports = async callback => {
 
         let asignatura = await Asignatura.deployed();
 
-        // Identificar al profesor:
-        let profesor = await asignatura.profesor();
-        console.log("Cuenta del profesor =", profesor);
+        console.log("Crear un profesor:");
+        await asignatura.addProfesor(accounts[1], "Profesor");
+
+        console.log("Asigna un coordinador:");
+        await asignatura.setCoordinador(accounts[0]);
 
         console.log("Crear cuatro evaluaciones:");
-        await asignatura.creaEvaluacion("Parcial 1", Date.now() + 60 * 24 * 3600000, 25);
-        await asignatura.creaEvaluacion("Parcial 2", Date.now() + 120 * 24 * 3600000, 30);
-        await asignatura.creaEvaluacion("Práctica 1", Date.now() + 50 * 24 * 3600000, 20);
-        await asignatura.creaEvaluacion("Práctica 1", Date.now() + 110 * 24 * 3600000, 25);
+        await asignatura.creaEvaluacion("Parcial 1", Date.now() + 60 * 24 * 3600000, 25, 0);
+        await asignatura.creaEvaluacion("Parcial 2", Date.now() + 120 * 24 * 3600000, 30, 0);
+        await asignatura.creaEvaluacion("Práctica 1", Date.now() + 50 * 24 * 3600000, 20, 0);
+        await asignatura.creaEvaluacion("Práctica 1", Date.now() + 110 * 24 * 3600000, 25, 0);
 
         console.log("Matricular a dos alumnos:");
-        let evaAccount = accounts[1];
-        let pepeAccount = accounts[2];
+        let evaAccount = accounts[2];
+        let pepeAccount = accounts[3];
         console.log("Cuenta de Eva =", evaAccount);
         console.log("Cuenta de Pepe =", pepeAccount);
         await asignatura.automatricula("Eva Martinez", "em@dominio.es", {from: evaAccount});
         await asignatura.automatricula("Jose Redondo", "jr@stio.com", {from: pepeAccount});
 
         console.log("Añadir calificaciones:");
-        await asignatura.califica(evaAccount,  0, 1, 0);
-        await asignatura.califica(evaAccount,  1, 2, 400);
-        await asignatura.califica(evaAccount,  2, 2, 750);
-        await asignatura.califica(evaAccount,  3, 2, 900);
-        await asignatura.califica(pepeAccount, 0, 0, 0);
-        await asignatura.califica(pepeAccount, 1, 1, 0);
-        await asignatura.califica(pepeAccount, 2, 2, 350);
-        await asignatura.califica(pepeAccount, 3, 2, 650);
+        await asignatura.califica(evaAccount,  0, 1, 0, {from: accounts[1]});
+        await asignatura.califica(evaAccount,  1, 2, 400, {from: accounts[1]});
+        await asignatura.califica(evaAccount,  2, 2, 750, {from: accounts[1]});
+        await asignatura.califica(evaAccount,  3, 2, 900, {from: accounts[1]});
+        await asignatura.califica(pepeAccount, 0, 0, 0, {from: accounts[1]});
+        await asignatura.califica(pepeAccount, 1, 1, 0, {from: accounts[1]});
+        await asignatura.califica(pepeAccount, 2, 2, 350, {from: accounts[1]});
+        await asignatura.califica(pepeAccount, 3, 2, 650, {from: accounts[1]});
     } catch (err) {   // Capturar errores
         console.log(`Error: ${err}`);
     } finally {

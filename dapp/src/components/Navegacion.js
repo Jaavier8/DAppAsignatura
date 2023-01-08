@@ -9,6 +9,7 @@ const Navegacion = () => {
             <li><NavLink className={f} to="/">Home</NavLink></li>
             <li><NavLink className={f} to="/evaluaciones/">Evaluaciones</NavLink></li>
             <li><NavLink className={f} to="/alumnos/">Alumnos</NavLink></li>
+            <li><NavLink className={f} to="/profesores/">Profesores</NavLink></li>
             <li><NavLink className={f} to="/calificaciones/">Calificaciones</NavLink></li>
             <li><NavLink className={f} to="/miscosas/">Mis Cosas</NavLink></li>
         </ul>

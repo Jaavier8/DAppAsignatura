@@ -6,6 +6,8 @@ const EvaluacionesHead = () =>
         <th>Nombre</th>
         <th>Fecha</th>
         <th>%</th>
+        <th>Editar</th>
+        <th>Notas</th>
     </tr>
     </thead>;
 

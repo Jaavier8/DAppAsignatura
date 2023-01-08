@@ -1,19 +1,24 @@
 import { useState } from "react";
 
-import EvaluacionesList from "./EvaluacionesList";
+import EvaluacionesHead from "./EvaluacionesList/EvaluacionesHead";
+import EvaluacionRow from "./EvaluacionesList/EvaluacionRow";
 
 import { drizzleReactHooks } from '@drizzle/react-plugin'
 
+import { useParams, Link } from "react-router-dom";
+
 const { useDrizzle, useDrizzleState } = drizzleReactHooks;
 
-function EvaluacionesPage() {
+function EvaluacionPage() {
     const { useCacheCall, useCacheSend } = useDrizzle();
+
+    let { id } = useParams();
 
     const drizzleState = useDrizzleState(state => state);
     const connected = drizzleState.accounts[0];
     const coordinator = useCacheCall("Asignatura", "coordinador");
 
-    const { send, status } = useCacheSend('Asignatura', 'creaEvaluacion');
+    const { send, status } = useCacheSend('Asignatura', 'editaEvaluacion');
 
     let [name, setName] = useState("");
     let [date, setDate] = useState("");
@@ -22,9 +27,14 @@ function EvaluacionesPage() {
 
     return (
         <section className="AppEvaluaciones">
-            <h2>Evaluaciones</h2>
+            <h2>Evaluacion</h2>
 
-            <EvaluacionesList />
+            <table>
+                <EvaluacionesHead />
+                <tbody>
+                    <EvaluacionRow key={"eb-" + id} evaluacionIndex={id} />
+                </tbody>
+            </table>
 
             ----------------------------------
 
@@ -55,8 +65,8 @@ function EvaluacionesPage() {
                     <button key="submit" className="pure-button" type="button"
                         onClick={ev => {
                             ev.preventDefault();
-                            send(name, new Date(date).getTime(), percentage, minimum);
-                        }}>Crear evaluación</button>
+                            send(id, name, new Date(date).getTime(), percentage, minimum);
+                        }}>Editar evaluación</button>
 
                     <p> Último estado = {status}</p>
 
@@ -65,7 +75,7 @@ function EvaluacionesPage() {
 
             ----------------------------------
 
-
+            <Link to={`/evaluaciones`}>Volver</Link>
 
         </section>
     );
@@ -73,4 +83,4 @@ function EvaluacionesPage() {
 }
 
 
-export default EvaluacionesPage;
+export default EvaluacionPage;

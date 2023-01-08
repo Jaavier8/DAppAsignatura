@@ -79,7 +79,11 @@ contract Asignatura {
 
     // Dada la direccion de un alumno, y el indice de la evaluacion, devuelve
     // la nota del alumno.
-    mapping(address => mapping(uint256 => Nota)) public calificaciones;
+    mapping(address => mapping(uint256 => Nota)) public calificacionesAlumno;
+
+    // Dado el indice de la evaluacion y la direccion de un alumno, devuelve
+    // la nota del alumno.
+    mapping(uint256 => mapping(address => Nota)) public calificacionesEvaluacion;
 
     /// Error usado para indicar que un DNI esta duplicado
     error DNIDuplicadoError(string dni);
@@ -167,7 +171,8 @@ contract Asignatura {
      * @param _dni El DNI del alumno.
      * @param _email El email del alumno.
      */
-    function matricular(address _addr, string memory _nombre, string memory _dni, string memory _email) soloOwner soloNoMatriculados soloAbierta public{
+    function matricular(address _addr, string memory _nombre, string memory _dni, string memory _email) soloOwner soloAbierta public{
+        require(!estaMatriculado(_addr), "Solo se pueden matricular alumno no matriculados.");
         _matricular(_addr, _nombre, _dni, _email);
     }
 
@@ -224,11 +229,30 @@ contract Asignatura {
      *
      * @return La posicion en el array evaluaciones,
      */
-    function creaEvaluacion(string memory _nombre, uint256 _fecha, uint256 _porcentaje, uint256 _minimo) public soloProfesor returns (uint256) {
+    function creaEvaluacion(string memory _nombre, uint256 _fecha, uint256 _porcentaje, uint256 _minimo) public soloCoordinador returns (uint256) {
         require(bytes(_nombre).length != 0, "El nombre de la evaluacion no puede ser vacio");
         
         evaluaciones.push(Evaluacion(_nombre, _fecha, _porcentaje, _minimo));
         return evaluaciones.length - 1;
+    }
+
+    /**
+     * Edita una prueba de evaluacion de la asignatura.
+     *
+     * @param _posicion Posicion en el array de evaluaciones.
+     * @param _nombre El nombre de la evaluacion.
+     * @param _fecha La fecha de evaluacion (segundos desde el 1/1/1970).
+     * @param _porcentaje El porcentaje de puntos que proporciona a la nota final.
+     * @param _minimo Nota minima necesaria para aprobar.
+     *
+     * @return La posicion en el array evaluaciones,
+     */
+    function editaEvaluacion(uint256 _posicion, string memory _nombre, uint256 _fecha, uint256 _porcentaje, uint256 _minimo) public soloCoordinador returns (uint256) {
+        require(bytes(_nombre).length != 0, "El nombre de la evaluacion no puede ser vacio");
+        
+        //delete evaluaciones[_posicion];
+        evaluaciones[_posicion] = Evaluacion(_nombre, _fecha, _porcentaje, _minimo);
+        return _posicion;
     }
 
     /**
@@ -255,7 +279,8 @@ contract Asignatura {
         
         Nota memory nota = Nota(tipo, calificacion);
 
-        calificaciones[alumno][evaluacion] = nota;
+        calificacionesAlumno[alumno][evaluacion] = nota;
+        calificacionesEvaluacion[evaluacion][alumno] = nota;
     }
 
     /**
@@ -270,7 +295,7 @@ contract Asignatura {
     function miNota(uint256 evaluacion) public view soloMatriculados returns (TipoNota tipo, uint256 calificacion){
         require(evaluacion < evaluaciones.length, "El indice de la evaluacion no existe.");
 
-        Nota memory nota = calificaciones[msg.sender][evaluacion];
+        Nota memory nota = calificacionesAlumno[msg.sender][evaluacion];
 
         tipo = nota.tipo;
         calificacion = nota.calificacion;
@@ -307,10 +332,10 @@ contract Asignatura {
         tipo = TipoNota.NP;
 
         for (uint i = 0; i < evaluaciones.length; i++){
-            if(calificaciones[_addr][i].tipo == TipoNota.Empty){
+            if(calificacionesAlumno[_addr][i].tipo == TipoNota.Empty){
                 return (TipoNota.Empty, 0);
             }
-            if(calificaciones[_addr][i].tipo == TipoNota.Normal){
+            if(calificacionesAlumno[_addr][i].tipo == TipoNota.Normal){
                 tipo = TipoNota.Normal;
                 continue;
             }
@@ -324,10 +349,10 @@ contract Asignatura {
         uint256 nota = 0;
 
         for(uint i = 0; i < evaluaciones.length; i++){
-            if(calificaciones[_addr][i].calificacion < evaluaciones[i].minimo){
+            if(calificacionesAlumno[_addr][i].calificacion < evaluaciones[i].minimo){
                 suspenso = true;
             }
-            nota += calificaciones[_addr][i].calificacion * evaluaciones[i].porcentaje / 100;
+            nota += calificacionesAlumno[_addr][i].calificacion * evaluaciones[i].porcentaje / 100;
         }
 
         if(suspenso && nota > 499) {

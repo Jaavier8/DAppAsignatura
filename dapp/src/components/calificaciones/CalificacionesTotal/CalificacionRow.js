@@ -1,11 +1,11 @@
-import {drizzleReactHooks} from '@drizzle/react-plugin'
+import { drizzleReactHooks } from '@drizzle/react-plugin'
 
-const {useDrizzle} = drizzleReactHooks;
+const { useDrizzle } = drizzleReactHooks;
 
-const CalificacionRow = ({alumnoIndex}) => {
-    const {useCacheCall} = useDrizzle();
+const CalificacionRow = (props) => {
+    const { useCacheCall } = useDrizzle();
 
-    const alumnoAddr = useCacheCall("Asignatura", "matriculas", alumnoIndex);
+    const alumnoAddr = useCacheCall("Asignatura", "matriculas", props.alumnoIndex);
 
     let alumnoName = useCacheCall(['Asignatura'],
         call => alumnoAddr && call("Asignatura", "datosAlumno", alumnoAddr)?.nombre
@@ -17,23 +17,30 @@ const CalificacionRow = ({alumnoIndex}) => {
         let cells = [];
         const evaluacionesLength = call("Asignatura", "evaluacionesLength") || 0;
         for (let ei = 0; ei < evaluacionesLength; ei++) {
-            const nota = call("Asignatura", "calificaciones", alumnoAddr, ei);
+            const nota = call("Asignatura", "calificacionesAlumno", alumnoAddr, ei);
             cells.push(
-                <td key={"p2-" + alumnoIndex + "-" + ei}>
-                    {nota?.tipo === "0" ? "" : ""}
-                    {nota?.tipo === "1" ? "N.P." : ""}
-                    {nota?.tipo === "2" ? (nota?.calificacion / 100).toFixed(2) : ""}
+                <td key={"p2-" + props.alumnoIndex + "-" + ei}>
+                    <button key="submit" className="pure-button" type="button"
+                        onClick={ev => {
+                            ev.preventDefault();
+                            props.onSetStudentDirection(alumnoAddr);
+                            props.onSetEvIndex(ei);
+                        }}>
+                        {nota?.tipo === "0" ? "Calificar" : ""}
+                        {nota?.tipo === "1" ? "N.P." : ""}
+                        {nota?.tipo === "2" ? (nota?.calificacion / 100).toFixed(2) : ""}
+                    </button>
                 </td>
             );
         }
         return cells;
     });
 
-    return <tr key={"d" + alumnoIndex}>
-            <th>A<sub>{alumnoIndex}</sub></th>
-            <td>{alumnoName}</td>
-            {cells}
-        </tr>;
+    return <tr key={"d" + props.alumnoIndex}>
+        <th>A<sub>{props.alumnoIndex}</sub></th>
+        <td>{alumnoName}</td>
+        {cells}
+    </tr>;
 };
 
 export default CalificacionRow;
