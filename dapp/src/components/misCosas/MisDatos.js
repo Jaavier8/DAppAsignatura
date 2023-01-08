@@ -6,10 +6,22 @@ const MisDatos = () => {
     const {useCacheCall} = useDrizzle();
     const drizzleState = useDrizzleState(state => state);
 
-    const address = drizzleState.accounts[0];
-    const balance = drizzleState.accountBalances[address];
+    const connected = drizzleState.accounts[0];
+    const balance = drizzleState.accountBalances[connected];
 
-    const datos = useCacheCall("Asignatura", "quienSoy", {from: address});
+    const isCoordinator = useCacheCall("Asignatura", "coordinador") === connected;
+    const isOwner = useCacheCall("Asignatura", "owner") === connected;
+    const isProfesor = useCacheCall("Asignatura", "datosProfesor", connected) !== "";
+    const isAlumno = useCacheCall("Asignatura", "datosAlumno", connected)?.nombre !== "";
+
+    let roles = [];
+
+    if (isCoordinator) roles.push("Coordinador");
+    if (isOwner) roles.push("Owner");
+    if (isProfesor) roles.push("Profesor");
+    if (isAlumno) roles.push("Alumno");
+
+    const datos = useCacheCall("Asignatura", "quienSoy", {from: connected});
 
     return (
         <article className="AppMisDatos">
@@ -17,8 +29,9 @@ const MisDatos = () => {
             <ul>
                 <li>Nombre: <span style={{color: "blue"}}>{datos?._nombre || "No matriculado"}</span></li>
                 <li>Email: <span style={{color: "blue"}}>{datos?._email || "No matriculado"}</span></li>
-                <li>Dirección: <span style={{color: "blue"}}>{address}</span></li>
+                <li>Dirección: <span style={{color: "blue"}}>{connected}</span></li>
                 <li>Balance: <span style={{color: "blue"}}>{balance}</span> weis</li>
+                <li>Roles: <span style={{color: "blue"}}>{roles.toString()}</span></li>
             </ul>
         </article>);
 };
