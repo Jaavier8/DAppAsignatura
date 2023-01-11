@@ -12,6 +12,8 @@ const Navegacion = () => {
             <li><NavLink className={f} to="/profesores/">Profesores</NavLink></li>
             <li><NavLink className={f} to="/calificaciones/">Calificaciones</NavLink></li>
             <li><NavLink className={f} to="/miscosas/">Mis Cosas</NavLink></li>
+            <li><NavLink className={f} to="/misnotas/">Mis Notas</NavLink></li>
+            <li><NavLink className={f} to="/notasfinales/">Notas Finales</NavLink></li>
         </ul>
     </nav>
 };
