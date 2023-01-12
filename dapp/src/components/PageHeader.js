@@ -1,22 +1,15 @@
 import { Stack, Typography, Divider } from "@mui/material";
 
-function PageHeader({ title, subtitle }) {
+function PageHeader({ title, subtitle, modal }) {
 
     return <>
-        <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
-            sx={{ my: 3, mx: 5 }}
-        >
-            <Stack>
-                <Typography variant="h4" gutterBottom>
-                    {title}
-                </Typography>
-                <Typography sx={{ color: "text.secondary" }}>
-                    {subtitle}
-                </Typography>
-            </Stack>
+        <Stack justifyContent="center" alignItems={modal ? "center" : ""} sx={{ my: 3, mx: 5 }}>
+            <Typography variant="h4" gutterBottom>
+                {title}
+            </Typography>
+            <Typography sx={{ color: "text.secondary" }}>
+                {subtitle}
+            </Typography>
         </Stack>
 
         <Divider />

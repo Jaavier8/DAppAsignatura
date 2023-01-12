@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Loading from './components/Loading';
 import Layout from './components/Layout';
-import HomePage from './components/home/HomePage';
 import EvaluacionesPage from "./components/evaluaciones/EvaluacionesPage";
 import EvaluacionPage from "./components/evaluaciones/EvaluacionPage";
 import AlumnosPage from "./components/alumnos/AlumnosPage";

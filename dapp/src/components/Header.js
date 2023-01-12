@@ -24,8 +24,8 @@ const Header = ({ onSetShowNavigation }) => {
 
     let roles = [];
 
+    if (context.isOwner) roles.push("Owner");
     if (context.isCoordinator) roles.push("Coordinador");
-    if (context.valueisOwner) roles.push("Owner");
     if (context.isProfesor) roles.push("Profesor");
     if (context.isAlumno) roles.push("Alumno");
 
