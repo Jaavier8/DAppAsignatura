@@ -22,33 +22,24 @@ const { useDrizzle, useDrizzleState } = drizzleReactHooks;
 
 function App() {
 
-    const { useCacheCall } = useDrizzle();
-    const drizzleState = useDrizzleState(state => state);
-
-    const connected = drizzleState.accounts[0];
-
-    const isOwner = useCacheCall("Asignatura", "owner") === connected;
-    const isCoordinator = useCacheCall("Asignatura", "coordinador") === connected;
-    const isProfesor = useCacheCall("Asignatura", "datosProfesor", connected) !== "";
-
     return (
         <div className="App">
             <Loading>
                 <BrowserRouter>
                     <Routes>
-                        <Route path="/" element={<Layout/>}>
-                            <Route index element={<HomePage/>}/>
-                            <Route path="evaluaciones" element={<EvaluacionesPage/>}/>
-                            <Route path="evaluaciones/:id" element={<EvaluacionPage/>}/>
-                            <Route path="alumnos" element={<AlumnosPage/>}/>
-                            <Route path="alumnos/:addr" element={<AlumnoDetail/>}/>
-                            <Route path="profesores" element={<ProfesoresPage/>}/>
-                            <Route path="calificacionesEv/:id" element={<CalificacionesEvaluacion/>}/>
-                            <Route path="calificaciones" element={<CalificacionesPage/>}/>
-                            <Route path="miscosas" element={<MisCosasPage/>}/>
-                            <Route path="misnotas" element={<NotasAlumno/>}/>
-                            <Route path="notasfinales" element={<NotasFinales/>}/>
-                            <Route path="*" element={<NoMatch/>}/>
+                        <Route path="/" element={<Layout />}>
+                            <Route index element={<HomePage />} />
+                            <Route path="evaluaciones" element={<EvaluacionesPage />} />
+                            <Route path="evaluaciones/:id" element={<EvaluacionPage />} />
+                            <Route path="alumnos" element={<AlumnosPage />} />
+                            <Route path="alumnos/:addr" element={<AlumnoDetail />} />
+                            <Route path="profesores" element={<ProfesoresPage />} />
+                            <Route path="calificacionesEv/:id" element={<CalificacionesEvaluacion />} />
+                            <Route path="calificaciones" element={<CalificacionesPage />} />
+                            <Route path="miscosas" element={<MisCosasPage />} />
+                            <Route path="misnotas" element={<NotasAlumno />} />
+                            <Route path="notasfinales" element={<NotasFinales />} />
+                            <Route path="*" element={<NoMatch />} />
                         </Route>
                     </Routes>
                 </BrowserRouter>

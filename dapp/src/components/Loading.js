@@ -1,8 +1,8 @@
-import {drizzleReactHooks} from '@drizzle/react-plugin';
+import { drizzleReactHooks } from '@drizzle/react-plugin';
 
 const { useDrizzleState } = drizzleReactHooks;
 
-const Loading = ({children}) => {
+const Loading = ({ children }) => {
 
     const initialized = useDrizzleState(state => state.drizzleStatus.initialized);
 

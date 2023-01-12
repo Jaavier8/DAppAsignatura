@@ -1,10 +1,16 @@
+import { useContext } from "react";
 import { useState } from "react";
 
 import { drizzleReactHooks } from '@drizzle/react-plugin'
 
+import { Context } from "../CreateContext";
+
 const { useDrizzle, useDrizzleState } = drizzleReactHooks;
 
 function HomePage() {
+    const value = useContext(Context);
+    console.log(value);
+
     const { useCacheCall, useCacheSend } = useDrizzle();
     const drizzleState = useDrizzleState(state => state);
 
