@@ -17,11 +17,12 @@ function Layout() {
     const isOwner = useCacheCall("Asignatura", "owner") === connected;
     const isCoordinator = useCacheCall("Asignatura", "coordinador") === connected;
     const isProfesor = useCacheCall("Asignatura", "datosProfesor", connected) !== "";
+    const isAlumno = useCacheCall("Asignatura", "datosAlumno", connected)?.nombre !== "";
     
     const [showNavigation, setShowNavigation] = useState(true);
 
     return (
-        <Context.Provider value={{ connected, isOwner, isCoordinator, isProfesor }}>
+        <Context.Provider value={{ connected, isOwner, isCoordinator, isProfesor, isAlumno }}>
             <Header onSetShowNavigation={() => setShowNavigation(current => !current)}/>
             {showNavigation && <Navegacion />}
             <Outlet />

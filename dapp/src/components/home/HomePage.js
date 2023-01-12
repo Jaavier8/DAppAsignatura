@@ -9,7 +9,6 @@ const { useDrizzle, useDrizzleState } = drizzleReactHooks;
 
 function HomePage() {
     const value = useContext(Context);
-    console.log(value);
 
     const { useCacheCall, useCacheSend } = useDrizzle();
     const drizzleState = useDrizzleState(state => state);

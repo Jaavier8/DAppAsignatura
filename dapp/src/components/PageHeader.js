@@ -7,7 +7,7 @@ function PageHeader({ title, subtitle }) {
             direction="row"
             alignItems="center"
             justifyContent="space-between"
-            sx={{ my: 5 }}
+            sx={{ my: 3, mx: 5 }}
         >
             <Stack>
                 <Typography variant="h4" gutterBottom>
