@@ -67,7 +67,6 @@ function EvaluationsScreen() {
 
             <Stack justifyContent="center" alignItems="center" sx={{ my: 3 }}>
                 <PersonalizedTable head={tableHead} rows={rows} />
-
             </Stack>
 
             {context.isCoordinator ? <>
