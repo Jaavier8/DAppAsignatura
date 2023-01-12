@@ -28,10 +28,7 @@ const Navegacion = () => {
             <Typography variant="h6" color="black" sx={{ flexGrow: 1 }}>Calificaciones</Typography>
         </NavLink>
         <NavLink className={f} to="/miscosas/">
-            <Typography variant="h6" color="black" sx={{ flexGrow: 1 }}>Mis Cosas</Typography>
-        </NavLink>
-        <NavLink className={f} to="/misnotas/">
-            <Typography variant="h6" color="black" sx={{ flexGrow: 1 }}>Mis Notas</Typography>
+            <Typography variant="h6" color="black" sx={{ flexGrow: 1 }}>Mis Datos</Typography>
         </NavLink>
         <NavLink className={f} to="/notasfinales/">
             <Typography variant="h6" color="black" sx={{ flexGrow: 1 }}>Notas Finales</Typography>

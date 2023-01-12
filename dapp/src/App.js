@@ -4,8 +4,6 @@ import Loading from './components/Loading';
 import Layout from './components/Layout';
 import CalificacionesPage from "./components/calificaciones/CalificacionesPage";
 import CalificacionesEvaluacion from "./components/calificaciones/CalificacionesEvaluacion";
-import MisCosasPage from "./components/misCosas/MisCosasPage";
-import NotasAlumno from "./components/calificaciones/NotasAlumno";
 import NotasFinales from "./components/calificaciones/NotasFinales";
 import NoMatch from './components/NoMatch';
 
@@ -14,6 +12,7 @@ import EvaluationsScreen from "./pages/EvaluationsScreen";
 import ProfessorsScreen from "./pages/ProfessorsScreen";
 import StudentsScreen from "./pages/StudentsScreen";
 import StudentDataScreen from "./pages/StudentDataScreen";
+import MyInfoScreen from "./pages/MyInfoScreen";
 
 function App() {
 
@@ -29,8 +28,7 @@ function App() {
                         <Route path="profesores" element={<ProfessorsScreen />} />
                         <Route path="calificacionesEv/:id" element={<CalificacionesEvaluacion />} />
                         <Route path="calificaciones" element={<CalificacionesPage />} />
-                        <Route path="miscosas" element={<MisCosasPage />} />
-                        <Route path="misnotas" element={<NotasAlumno />} />
+                        <Route path="miscosas" element={<MyInfoScreen />} />
                         <Route path="notasfinales" element={<NotasFinales />} />
                         <Route path="*" element={<NoMatch />} />
                     </Route>
