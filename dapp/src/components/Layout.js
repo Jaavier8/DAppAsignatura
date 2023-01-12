@@ -19,10 +19,17 @@ function Layout() {
     const isProfesor = useCacheCall("Asignatura", "datosProfesor", connected) !== "";
     const isAlumno = useCacheCall("Asignatura", "datosAlumno", connected)?.nombre !== "";
     
+    let roles = [];
+
+    if (isOwner) roles.push("Owner");
+    if (isCoordinator) roles.push("Coordinador");
+    if (isProfesor) roles.push("Profesor");
+    if (isAlumno) roles.push("Alumno");
+
     const [showNavigation, setShowNavigation] = useState(true);
 
     return (
-        <Context.Provider value={{ connected, isOwner, isCoordinator, isProfesor, isAlumno }}>
+        <Context.Provider value={{ connected, isOwner, isCoordinator, isProfesor, isAlumno, roles }}>
             <Header onSetShowNavigation={() => setShowNavigation(current => !current)}/>
             {showNavigation && <Navegacion />}
             <Outlet />

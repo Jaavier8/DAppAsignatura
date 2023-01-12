@@ -30,7 +30,7 @@ function ProfessorsScreen() {
         return rows;
     });
 
-    const tableHead = ["Nombre"];
+    const tableHead = ["Profesores de la asignatura"];
 
     return (
         <>

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 
 import { drizzleReactHooks } from '@drizzle/react-plugin'
 
@@ -8,9 +8,11 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Stack } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 
 import { Context } from "./CreateContext";
+
+import Automatricula from "./alumnos/Automatricula";
 
 const { useDrizzle } = drizzleReactHooks;
 
@@ -22,12 +24,7 @@ const Header = ({ onSetShowNavigation }) => {
     const nombre = useCacheCall("Asignatura", "nombre");
     const curso = useCacheCall("Asignatura", "curso");
 
-    let roles = [];
-
-    if (context.isOwner) roles.push("Owner");
-    if (context.isCoordinator) roles.push("Coordinador");
-    if (context.isProfesor) roles.push("Profesor");
-    if (context.isAlumno) roles.push("Alumno");
+    const [showAutomatriculaModal, setShowAutomatriculaModal] = useState(false);
 
     return (
         <>
@@ -48,12 +45,20 @@ const Header = ({ onSetShowNavigation }) => {
                                 Asignatura Full: {nombre}-{curso}
                             </Typography>
                             <Stack alignItems="flex-end">
-                                {roles.length === 0 ? "Usuario sin Rol" : <>
+                                {context.roles.length === 0 ? <>
+                                    <Button
+                                        variant="contained"
+                                        color="warning"
+                                        onClick={() => setShowAutomatriculaModal(true)}
+                                    >
+                                        Automatricularme
+                                    </Button>
+                                </> : <>
                                     <Typography variant="subtitle1" component="div" align="center" >
                                         Conectado como:
                                     </Typography>
                                     <Typography variant="subtitle2" component="div" align="center" >
-                                        {roles.toString()}
+                                        {context.roles.toString()}
                                     </Typography>
                                 </>}
                             </Stack>
@@ -62,6 +67,10 @@ const Header = ({ onSetShowNavigation }) => {
                 </AppBar>
             </Box>
 
+            <Automatricula
+                show={showAutomatriculaModal}
+                onClose={() => setShowAutomatriculaModal(false)}
+            />
         </>
     );
 };
