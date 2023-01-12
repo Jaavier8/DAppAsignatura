@@ -16,9 +16,7 @@ import NotasAlumno from "./components/calificaciones/NotasAlumno";
 import NotasFinales from "./components/calificaciones/NotasFinales";
 import NoMatch from './components/NoMatch';
 
-import { drizzleReactHooks } from '@drizzle/react-plugin'
-
-const { useDrizzle, useDrizzleState } = drizzleReactHooks;
+import HomeScreen from './pages/HomeScreen';
 
 function App() {
 
@@ -28,7 +26,7 @@ function App() {
                 <BrowserRouter>
                     <Routes>
                         <Route path="/" element={<Layout />}>
-                            <Route index element={<HomePage />} />
+                            <Route index element={<HomeScreen />} />
                             <Route path="evaluaciones" element={<EvaluacionesPage />} />
                             <Route path="evaluaciones/:id" element={<EvaluacionPage />} />
                             <Route path="alumnos" element={<AlumnosPage />} />

@@ -1,10 +1,11 @@
 import { useState } from "react";
-
 import { drizzleReactHooks } from '@drizzle/react-plugin'
+
+import PageHeader from "../components/PageHeader";
 
 const { useDrizzle, useDrizzleState } = drizzleReactHooks;
 
-function HomePage() {
+function HomeScreen() {
     const { useCacheCall, useCacheSend } = useDrizzle();
     const drizzleState = useDrizzleState(state => state);
 
@@ -26,6 +27,8 @@ function HomePage() {
 
     return (
         <div>
+
+            <PageHeader title="Página principal de la asignatura" subtitle="A continuación se muestran los datos generales de la asignatura. En caso de ser el owner, se puede cambiar el coordinador de la asignatura. En caso de ser el coordinador, se puede cerrar la asignatura." />
             <p>Página Home de la Asignatura</p>
 
             ----------------------------------
@@ -74,4 +77,4 @@ function HomePage() {
     );
 }
 
-export default HomePage;
+export default HomeScreen;
