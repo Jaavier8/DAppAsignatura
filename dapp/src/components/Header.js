@@ -48,12 +48,14 @@ const Header = ({ onSetShowNavigation }) => {
                                 Asignatura Full: {nombre}-{curso}
                             </Typography>
                             <Stack alignItems="flex-end">
-                                <Typography variant="subtitle1" component="div" align="center" >
-                                    Conectado como:
-                                </Typography>
-                                <Typography variant="subtitle2" component="div" align="center" >
-                                    {roles.toString()}
-                                </Typography>
+                                {roles.length === 0 ? "Usuario sin Rol" : <>
+                                    <Typography variant="subtitle1" component="div" align="center" >
+                                        Conectado como:
+                                    </Typography>
+                                    <Typography variant="subtitle2" component="div" align="center" >
+                                        {roles.toString()}
+                                    </Typography>
+                                </>}
                             </Stack>
                         </Stack>
                     </Toolbar>
