@@ -6,7 +6,7 @@ import { drizzleReactHooks } from '@drizzle/react-plugin'
 import drizzle from "../../dapp/src/drizzle";
 
 import './css/index.css';
-import App from './components/App';
+import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
