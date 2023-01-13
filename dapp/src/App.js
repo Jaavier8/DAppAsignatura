@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Loading from './components/Loading';
 import Layout from './components/Layout';
-import NoMatch from './components/NoMatch';
 
 import HomeScreen from './pages/HomeScreen';
 import EvaluationsScreen from "./pages/EvaluationsScreen";
@@ -13,6 +12,7 @@ import MyInfoScreen from "./pages/MyInfoScreen";
 import EvaluationCalificationsScreen from "./pages/EvaluationCalificationsScreen";
 import CalificationsScreen from "./pages/CalificationsScreen";
 import FinalCalificationsScreen from "./pages/FinalCalificationsScreen";
+import NoMatchScreen from "./pages/NoMatchScreen";
 
 function App() {
 
@@ -30,7 +30,7 @@ function App() {
                         <Route path="calificaciones" element={<CalificationsScreen />} />
                         <Route path="miscosas" element={<MyInfoScreen />} />
                         <Route path="notasfinales" element={<FinalCalificationsScreen />} />
-                        <Route path="*" element={<NoMatch />} />
+                        <Route path="*" element={<NoMatchScreen />} />
                     </Route>
                 </Routes>
             </BrowserRouter>
