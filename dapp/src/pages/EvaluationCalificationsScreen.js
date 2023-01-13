@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { drizzleReactHooks } from '@drizzle/react-plugin'
 
 import { Stack } from "@mui/system";
@@ -5,12 +6,14 @@ import { Button } from "@mui/material";
 
 import { Link, useParams } from "react-router-dom";
 
+import { Context } from "../components/CreateContext";
 import PageHeader from "../components/PageHeader";
 import PersonalizedTable from "../components/PersonalizedTable";
 
 const { useDrizzle } = drizzleReactHooks;
 
 function EvaluationCalificationsScreen() {
+    const context = useContext(Context);
 
     let { id } = useParams();
 
@@ -35,20 +38,29 @@ function EvaluationCalificationsScreen() {
 
     const tableHead = ["Nombre", "Nota"];
 
-    return (
-        <>
+    if (context.isProfesor || context.isCoordinator) {
+        return (
+            <>
+                <PageHeader title={"Notas de la evaluación: " + ev?.nombre} subtitle={"A continuación se muestran las notas de todos los alumnos en la evaluación: " + ev?.nombre} />
 
-            <PageHeader title={"Notas de la evaluación: " + ev?.nombre} subtitle={"A continuación se muestran las notas de todos los alumnos en la evaluación: " + ev?.nombre} />
+                <Stack justifyContent="center" alignItems="center" sx={{ my: 3 }}>
+                    <PersonalizedTable head={tableHead} rows={rows} />
 
-            <Stack justifyContent="center" alignItems="center" sx={{ my: 3 }}>
-                <PersonalizedTable head={tableHead} rows={rows} />
+                    <Button variant="outlined" component={Link} to={`/evaluaciones`} sx={{ mt: 2 }}>Volver</Button>
 
-                <Button variant="outlined" component={Link} to={`/evaluaciones`} sx={{ mt: 2 }}>Volver</Button>
+                </Stack>
 
-            </Stack>
 
-        </>
-    );
+            </>
+
+        )
+    } else {
+        return (
+            <>
+                <PageHeader title="No tienes permiso para acceder a esta página" subtitle="" modal={true} />
+            </>
+        )
+    }
 }
 
 export default EvaluationCalificationsScreen;

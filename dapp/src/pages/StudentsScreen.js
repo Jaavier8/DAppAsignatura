@@ -34,37 +34,46 @@ function StudentsScreen() {
 
     const tableHead = ["Nombre", "DNI", "Email", "Info"];
 
-    return (
-        <>
+    if (context.isOwner || context.isCoordinator || context.isProfesor) {
+        return (
+            <>
 
-            <PageHeader title="Alumnos" subtitle="A continuación se muestran los alumnos matriculados en la asignatura. En caso de ser el owner, se pueden matricular nuevos alumnos." />
+                <PageHeader title="Alumnos" subtitle="A continuación se muestran los alumnos matriculados en la asignatura. En caso de ser el owner, se pueden matricular nuevos alumnos." />
 
-            <Stack justifyContent="center" alignItems="center" sx={{ my: 3 }}>
-                <PersonalizedTable head={tableHead} rows={rows} />
-            </Stack>
-
-            {context.isOwner ? <>
-                <Divider />
-                <Stack justifyContent="center" alignItems="center" spacing={2} sx={{ my: 3 }}>
-                    <Typography variant="h5">
-                        <b>Acciones</b>
-                    </Typography>
-                    <Button
-                        variant="contained"
-                        onClick={() => setShowNewStudentModal(true)}
-                    >
-                        Añadir alumno
-                    </Button>
+                <Stack justifyContent="center" alignItems="center" sx={{ my: 3 }}>
+                    <PersonalizedTable head={tableHead} rows={rows} />
                 </Stack>
-            </> : null}
 
-            <Matricula
-                show={showNewStudentModal}
-                onClose={() => setShowNewStudentModal(false)}
-            />
+                {context.isOwner ? <>
+                    <Divider />
+                    <Stack justifyContent="center" alignItems="center" spacing={2} sx={{ my: 3 }}>
+                        <Typography variant="h5">
+                            <b>Acciones</b>
+                        </Typography>
+                        <Button
+                            variant="contained"
+                            onClick={() => setShowNewStudentModal(true)}
+                        >
+                            Añadir alumno
+                        </Button>
+                    </Stack>
+                </> : null}
 
-        </>
-    );
+                <Matricula
+                    show={showNewStudentModal}
+                    onClose={() => setShowNewStudentModal(false)}
+                />
+
+            </>
+        )
+    } else {
+        return (
+            <>
+                <PageHeader title="No tienes permiso para acceder a esta página" subtitle="" modal={true} />
+            </>
+        )
+    }
+
 }
 
 export default StudentsScreen;
