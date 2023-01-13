@@ -13,6 +13,7 @@ import EvaluationCalificationsScreen from "./pages/EvaluationCalificationsScreen
 import CalificationsScreen from "./pages/CalificationsScreen";
 import FinalCalificationsScreen from "./pages/FinalCalificationsScreen";
 import NoMatchScreen from "./pages/NoMatchScreen";
+import ClosedScreen from "./pages/ClosedScreen";
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
                         <Route path="calificaciones" element={<CalificationsScreen />} />
                         <Route path="miscosas" element={<MyInfoScreen />} />
                         <Route path="notasfinales" element={<FinalCalificationsScreen />} />
+                        <Route path="closed" element={<ClosedScreen />} />
                         <Route path="*" element={<NoMatchScreen />} />
                     </Route>
                 </Routes>
