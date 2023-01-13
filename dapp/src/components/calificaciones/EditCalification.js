@@ -107,7 +107,7 @@ function EditCalification({ show, onClose, studentAddress, evId }) {
             <TextField
               fullWidth
               type="number"
-              label="Nota"
+              label="Nota (x100)"
               value={note}
               onChange={(event) => {
                 setNote(event.target.value);

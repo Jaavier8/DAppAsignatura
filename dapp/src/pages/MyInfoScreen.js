@@ -15,6 +15,21 @@ function MyInfoScreen() {
 
     const context = useContext(Context);
 
+    const result = (note) => {
+        if (note) {
+            switch (note.tipo) {
+                case "0":
+                    return "Sin calificación";
+                case "1":
+                    return "N.P.";
+                case "2":
+                    return (note.calificacion / 100).toFixed(2);
+                default:
+                    return "Sin calificación";
+            }
+        }
+    }
+
     let datos = {};
 
     const tableHead = ["Evaluación", "Nota"];
@@ -29,7 +44,7 @@ function MyInfoScreen() {
             for (let i = 0; i < el; i++) {
                 const ev = call("Asignatura", "evaluaciones", i);
                 const nota = call("Asignatura", "calificacionesAlumno", context.connected, i);
-                rows.push([ev?.nombre, nota?.calificacion]);
+                rows.push([ev?.nombre, result(nota)]);
             }
         }
         return rows;
@@ -45,11 +60,11 @@ function MyInfoScreen() {
                 <Typography variant="h5">
                     <b>Nombre</b>
                 </Typography>
-                <Typography variant="body1" sx={{ mb: 2 }}>{datos?.nombre ? datos.nombre : "Desconocido"}</Typography>
+                <Typography variant="body1" sx={{ mb: 2 }}>{datos?._nombre ? datos._nombre : "Desconocido"}</Typography>
                 <Typography variant="h5">
                     <b>Correo electrónico</b>
                 </Typography>
-                <Typography variant="body1" sx={{ mb: 2 }}>{datos?.email ? datos.email : "Desconocido"}</Typography>
+                <Typography variant="body1" sx={{ mb: 2 }}>{datos?._email ? datos._email : "Desconocido"}</Typography>
                 <Typography variant="h5">
                     <b>Dirección</b>
                 </Typography>
@@ -57,7 +72,7 @@ function MyInfoScreen() {
                 <Typography variant="h5">
                     <b>Balance</b>
                 </Typography>
-                <Typography variant="body1" sx={{ mb: 2 }}>{context.balance}</Typography>
+                <Typography variant="body1" sx={{ mb: 2 }}>{context.balance} weis</Typography>
                 <Typography variant="h5">
                     <b>Roles</b>
                 </Typography>

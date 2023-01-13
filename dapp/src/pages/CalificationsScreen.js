@@ -25,6 +25,21 @@ function CalificationsScreen() {
     let [studentAddress, setStudentAddress] = useState("");
     let [evSelected, setEvSelected] = useState(-1);
 
+    const result = (note) => {
+        if (note) {
+            switch (note.tipo) {
+                case "0":
+                    return "Sin calificación";
+                case "1":
+                    return "N.P.";
+                case "2":
+                    return (note.calificacion / 100).toFixed(2);
+                default:
+                    return "Sin calificación";
+            }
+        }
+    }
+
     let rows = useCacheCall(['Asignatura'], call => {
         let rows = [];
         const ml = call("Asignatura", "matriculasLength") || 0;
@@ -41,7 +56,7 @@ function CalificationsScreen() {
 
                 if (context?.isProfesor) {
                     califications.push(<>
-                        {nota?.calificacion} <sup>
+                        {result(nota)} <sup>
                             <IconButton
                                 onClick={() => {
                                     setShowEditCalificationModal(true);
@@ -60,7 +75,7 @@ function CalificationsScreen() {
                         </sup>
                     </>);
                 } else {
-                    califications.push(nota?.calificacion);
+                    califications.push(result(nota));
                 }
             }
 
