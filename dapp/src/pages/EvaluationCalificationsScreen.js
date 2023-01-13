@@ -1,8 +1,7 @@
 import { useContext } from 'react';
 import { drizzleReactHooks } from '@drizzle/react-plugin'
 
-import { Stack } from "@mui/system";
-import { Button } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 
 import { Link, useParams } from "react-router-dom";
 

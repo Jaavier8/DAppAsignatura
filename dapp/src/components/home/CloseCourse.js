@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { drizzleReactHooks } from '@drizzle/react-plugin'
 
 import {
   Button,
   Container,
-  Modal,
-  TextField
+  Modal
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
@@ -41,8 +40,6 @@ const MyContainer = styled(Container)(({ theme }) => ({
 
 function CloseCourse({ show, onClose }) {
 
-  const [direction, setDirection] = useState("");
-
   const { useCacheSend } = useDrizzle();
 
   const {send, status} = useCacheSend('Asignatura', 'cerrar');
@@ -54,7 +51,6 @@ function CloseCourse({ show, onClose }) {
         onClose={onClose}
         onBackdropClick={() => {
           onClose();
-          setDirection("");
         }}
       >
         <RootStyle>

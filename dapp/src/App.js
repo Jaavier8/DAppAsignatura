@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Loading from './components/Loading';
 import Layout from './components/Layout';
-import NotasFinales from "./components/calificaciones/NotasFinales";
 import NoMatch from './components/NoMatch';
 
 import HomeScreen from './pages/HomeScreen';

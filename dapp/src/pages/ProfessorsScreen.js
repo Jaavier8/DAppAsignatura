@@ -2,8 +2,7 @@ import { useState, useContext } from "react";
 import { drizzleReactHooks } from '@drizzle/react-plugin'
 
 import { Context } from "../components/CreateContext";
-import { Stack } from "@mui/system";
-import { Button, Divider, Typography } from "@mui/material";
+import { Button, Divider, Typography, Stack } from "@mui/material";
 
 import PageHeader from "../components/PageHeader";
 import PersonalizedTable from "../components/PersonalizedTable";
