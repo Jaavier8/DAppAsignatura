@@ -28,8 +28,8 @@ module.exports = async callback => {
         let pepeAccount = accounts[3];
         console.log("Cuenta de Eva =", evaAccount);
         console.log("Cuenta de Pepe =", pepeAccount);
-        await asignatura.automatricula("Eva Martinez", "em@dominio.es", {from: evaAccount});
-        await asignatura.automatricula("Jose Redondo", "jr@stio.com", {from: pepeAccount});
+        await asignatura.matricular(evaAccount, "Eva Martinez","00000001A", "em@dominio.es");
+        await asignatura.matricular(pepeAccount, "Jose Redondo","00000002B", "jr@stio.com");
 
         console.log("Añadir calificaciones:");
         await asignatura.califica(evaAccount,  0, 1, 0, {from: accounts[1]});
