@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, forwardRef } from "react";
 import { drizzleReactHooks } from '@drizzle/react-plugin'
 
 import {
   Button,
   Container,
   Modal,
-  TextField
+  TextField,
+  Snackbar
 } from "@mui/material";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -13,6 +14,16 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { styled } from "@mui/material/styles";
 
 import PageHeader from "../PageHeader";
+
+import MuiAlert from '@mui/material/Alert';
+
+const Alert = forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
+const MyAlert = styled(Alert)(({ theme }) => ({
+  backgroundColor: theme.palette.primary.main
+}));
 
 const { useDrizzle } = drizzleReactHooks;
 
@@ -49,12 +60,36 @@ function NewEvaluation({ show, onClose }) {
   const [percentage, setPercentage] = useState(0);
   const [minimum, setMinimum] = useState(0);
 
+  const [showSuccessSnackbar, setShowSuccessSnackbar] = useState(false);
+  const [showErrorSnackbar, setShowErrorSnackbar] = useState(false);
+
   const { useCacheSend } = useDrizzle();
 
   const { send, status } = useCacheSend('Asignatura', 'creaEvaluacion');
 
+  useEffect(() => {
+    if (status === 'success') {
+      setShowSuccessSnackbar(true);
+      onClose();
+    } else if (status === 'error') {
+      setShowErrorSnackbar(false);
+      onClose();
+    }
+  }, [status, onClose]);
+
   return (
     <>
+      <Snackbar open={showSuccessSnackbar} autoHideDuration={5000} onClose={() => setShowSuccessSnackbar(false)}>
+        <MyAlert onClose={() => setShowSuccessSnackbar(false)} severity="success" sx={{ width: '100%' }}>
+          Evaluación creada con éxito
+        </MyAlert>
+      </Snackbar>
+      <Snackbar open={showErrorSnackbar} autoHideDuration={5000} onClose={() => setShowErrorSnackbar(false)}>
+        <MyAlert onClose={() => setShowErrorSnackbar(false)} severity="success" sx={{ width: '100%' }}>
+          Ha ocurrido algún error
+        </MyAlert>
+      </Snackbar>
+
       <Modal
         open={show}
         onClose={onClose}
