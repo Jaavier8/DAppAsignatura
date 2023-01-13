@@ -2,8 +2,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Loading from './components/Loading';
 import Layout from './components/Layout';
-import CalificacionesPage from "./components/calificaciones/CalificacionesPage";
-import CalificacionesEvaluacion from "./components/calificaciones/CalificacionesEvaluacion";
 import NotasFinales from "./components/calificaciones/NotasFinales";
 import NoMatch from './components/NoMatch';
 
@@ -13,6 +11,9 @@ import ProfessorsScreen from "./pages/ProfessorsScreen";
 import StudentsScreen from "./pages/StudentsScreen";
 import StudentDataScreen from "./pages/StudentDataScreen";
 import MyInfoScreen from "./pages/MyInfoScreen";
+import EvaluationCalificationsScreen from "./pages/EvaluationCalificationsScreen";
+import CalificationsScreen from "./pages/CalificationsScreen";
+import FinalCalificationsScreen from "./pages/FinalCalificationsScreen";
 
 function App() {
 
@@ -26,10 +27,10 @@ function App() {
                         <Route path="alumnos" element={<StudentsScreen />} />
                         <Route path="alumnos/:addr" element={<StudentDataScreen />} />
                         <Route path="profesores" element={<ProfessorsScreen />} />
-                        <Route path="calificacionesEv/:id" element={<CalificacionesEvaluacion />} />
-                        <Route path="calificaciones" element={<CalificacionesPage />} />
+                        <Route path="calificacionesEv/:id" element={<EvaluationCalificationsScreen />} />
+                        <Route path="calificaciones" element={<CalificationsScreen />} />
                         <Route path="miscosas" element={<MyInfoScreen />} />
-                        <Route path="notasfinales" element={<NotasFinales />} />
+                        <Route path="notasfinales" element={<FinalCalificationsScreen />} />
                         <Route path="*" element={<NoMatch />} />
                     </Route>
                 </Routes>

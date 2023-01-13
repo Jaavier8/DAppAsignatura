@@ -30,9 +30,10 @@ const Navegacion = () => {
         <NavLink className={f} to="/miscosas/">
             <Typography variant="h6" color="black" sx={{ flexGrow: 1 }}>Mis Datos</Typography>
         </NavLink>
-        <NavLink className={f} to="/notasfinales/">
-            <Typography variant="h6" color="black" sx={{ flexGrow: 1 }}>Notas Finales</Typography>
-        </NavLink>
+        {(context.isProfesor || context.isCoordinator) ?
+            <NavLink className={f} to="/notasfinales/">
+                <Typography variant="h6" color="black" sx={{ flexGrow: 1 }}>Notas Finales</Typography>
+            </NavLink> : null}
     </Stack >
 };
 

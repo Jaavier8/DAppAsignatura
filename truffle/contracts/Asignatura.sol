@@ -324,7 +324,7 @@ contract Asignatura {
      * @return tipo Tipo de nota
      * @return calificacion Calificacion del alumno
      */
-    function notaFinal(address _addr) soloCoordinador public view returns (TipoNota tipo, uint256 calificacion){
+    function notaFinal(address _addr) soloCoordinadorOProfesor public view returns (TipoNota tipo, uint256 calificacion){
         return _notaFinal(_addr);
     }
 
@@ -406,6 +406,18 @@ contract Asignatura {
         require(bytes(_nombre).length != 0, "Solo permitido al profesor");
         _;
     }
+
+    /**
+     * Modificador para que una funcion solo la pueda ejecutar el profesor o el coordinador.
+     *
+     * Se usa en notaFinal.
+     */
+    modifier soloCoordinadorOProfesor() {
+        string memory _nombre = datosProfesor[msg.sender];
+        require(bytes(_nombre).length != 0 || msg.sender == coordinador, "Solo permitido al profesor o coordinador");
+        _;
+    }
+
     /**
      * Modificador para que una funcion solo la pueda ejecutar un alumno matriculado.
      */

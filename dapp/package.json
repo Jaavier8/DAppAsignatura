@@ -7,6 +7,8 @@
     "@drizzle/store": "^1.5.3",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@iconify/icons-eva": "^1.2.6",
+    "@iconify/react": "^4.0.1",
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.4",
     "@mui/x-date-pickers": "^5.0.13",
