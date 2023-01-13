@@ -1,7 +1,9 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { drizzleReactHooks } from '@drizzle/react-plugin'
 
 import { Stack } from "@mui/material";
+
+import { useNavigate } from "react-router-dom";
 
 import { Context } from "../components/CreateContext";
 import PageHeader from "../components/PageHeader";
@@ -10,6 +12,7 @@ import PersonalizedTable from "../components/PersonalizedTable";
 const { useDrizzle } = drizzleReactHooks;
 
 function ClosedScreen() {
+    let navigate = useNavigate();
     const context = useContext(Context);
 
     const { useCacheCall } = useDrizzle();
@@ -46,6 +49,10 @@ function ClosedScreen() {
         return rows;
     });
 
+    useEffect(() => {
+        if (!context.cerrada)
+            navigate("/");
+    }, [context.cerrada, navigate]);
 
     let tableHead = ["Nombre", "Nota final"];
 
