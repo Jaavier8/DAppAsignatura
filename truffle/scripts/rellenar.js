@@ -12,7 +12,7 @@ module.exports = async callback => {
         let asignatura = await Asignatura.deployed();
 
         console.log("Crear un profesor:");
-        await asignatura.addProfesor(accounts[1], "Profesor");
+        await asignatura.addProfesor(accounts[1], "Santiago Pavón");
 
         console.log("Asigna un coordinador:");
         await asignatura.setCoordinador(accounts[0]);

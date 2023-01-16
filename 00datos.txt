@@ -1,0 +1,7 @@
+Javier Rodríguez Gallardo
+
+Se han realizado todas las mejoras descritas en el Moodle, así como algunas adicionales.
+Las mejoras se encuentran explicadas en el README del proyecto.
+
+El proyecto se encuentra en:
+https://github.com/Jaavier8/DAppAsignatura
