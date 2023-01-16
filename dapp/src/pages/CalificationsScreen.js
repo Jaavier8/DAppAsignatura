@@ -22,6 +22,7 @@ function CalificationsScreen() {
     let [showEditCalificationModal, setShowEditCalificationModal] = useState(false);
     let [studentAddress, setStudentAddress] = useState("");
     let [evSelected, setEvSelected] = useState(-1);
+    let [noteSelected, setNoteSelected] = useState({});
 
     const result = (note) => {
         if (note) {
@@ -60,6 +61,7 @@ function CalificationsScreen() {
                                     setShowEditCalificationModal(true);
                                     setStudentAddress(addr);
                                     setEvSelected(j);
+                                    setNoteSelected(nota);
                                 }}
                                 sx={{
                                     color: 'black',
@@ -109,6 +111,7 @@ function CalificationsScreen() {
                 onClose={() => setShowEditCalificationModal(false)}
                 studentAddress={studentAddress}
                 evId={evSelected}
+                noteSelected={noteSelected}
             />
         </>
     );

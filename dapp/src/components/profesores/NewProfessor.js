@@ -54,6 +54,7 @@ function NewProfessor({ show, onClose }) {
 
   const [direction, setDirection] = useState("");
   const [name, setName] = useState("");
+  const [clicked, setClicked] = useState(false);
 
   const [showSuccessSnackbar, setShowSuccessSnackbar] = useState(false);
   const [showErrorSnackbar, setShowErrorSnackbar] = useState(false);
@@ -63,12 +64,18 @@ function NewProfessor({ show, onClose }) {
   const { send, status } = useCacheSend('Asignatura', 'addProfesor');
 
   useEffect(() => {
-    if (status === 'success') {
+    if (status === 'success' && clicked) {
       setShowSuccessSnackbar(true);
       onClose();
-    } else if (status === 'error') {
+      setClicked(false);
+      setDirection("");
+      setName("");
+    } else if (status === 'error' && clicked) {
       setShowErrorSnackbar(false);
       onClose();
+      setClicked(false);
+      setDirection("");
+      setName("");
     }
   }, [status, onClose]);
 
@@ -92,6 +99,7 @@ function NewProfessor({ show, onClose }) {
           onClose();
           setDirection("");
           setName("");
+          setClicked(false);
         }}
       >
         <RootStyle>
@@ -123,7 +131,10 @@ function NewProfessor({ show, onClose }) {
               fullWidth
               size="large"
               variant="contained"
-              onClick={() => send(direction, name)}
+              onClick={() => {
+                send(direction, name);
+                setClicked(true);
+              }}
             >
               Añadir profesor
             </Button>

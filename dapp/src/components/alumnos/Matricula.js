@@ -55,6 +55,7 @@ function Matricula({ show, onClose }) {
   const [name, setName] = useState("");
   const [dni, setDni] = useState("");
   const [email, setEmail] = useState("");
+  const [clicked, setClicked] = useState(false);
 
   const [showSuccessSnackbar, setShowSuccessSnackbar] = useState(false);
   const [showErrorSnackbar, setShowErrorSnackbar] = useState(false);
@@ -64,11 +65,21 @@ function Matricula({ show, onClose }) {
   const { send, status } = useCacheSend('Asignatura', 'matricular');
 
   useEffect(() => {
-    if (status === 'success') {
+    if (status === 'success' && clicked) {
       setShowSuccessSnackbar(true);
+      setClicked(false);
+      setDirection("");
+      setName("");
+      setDni("");
+      setEmail("");
       onClose();
-    } else if (status === 'error') {
+    } else if (status === 'error' && clicked) {
       setShowErrorSnackbar(false);
+      setClicked(false);
+      setDirection("");
+      setName("");
+      setDni("");
+      setEmail("");
       onClose();
     }
   }, [status, onClose]);
@@ -91,6 +102,11 @@ function Matricula({ show, onClose }) {
         onClose={onClose}
         onBackdropClick={() => {
           onClose();
+          setDirection("");
+          setName("");
+          setDni("");
+          setEmail("");
+          setClicked(false);
         }}
       >
         <RootStyle>
@@ -142,7 +158,10 @@ function Matricula({ show, onClose }) {
               fullWidth
               size="large"
               variant="contained"
-              onClick={() => send(direction, name, dni, email)}
+              onClick={() => {
+                send(direction, name, dni, email);
+                setClicked(true);
+              }}
               sx={{ mt: 3 }}
             >
               Matricular alumno

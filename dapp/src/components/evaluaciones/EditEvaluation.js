@@ -61,6 +61,7 @@ function EditEvaluation({ show, onClose, evId }) {
   const [date, setDate] = useState("");
   const [percentage, setPercentage] = useState(0);
   const [minimum, setMinimum] = useState(0);
+  const [clicked, setClicked] = useState(false);
 
   const [showSuccessSnackbar, setShowSuccessSnackbar] = useState(false);
   const [showErrorSnackbar, setShowErrorSnackbar] = useState(false);
@@ -68,12 +69,7 @@ function EditEvaluation({ show, onClose, evId }) {
   const ev = useCacheCall(['Asignatura'], call => evId !== -1 ? call("Asignatura", "evaluaciones", evId) : null);
 
   useEffect(() => {
-    if (ev) {
-      console.log(ev.nombre);
-      console.log(new Date(parseInt(ev.fecha)).toLocaleString());
-      console.log(parseInt(ev.porcentaje));
-      console.log(parseInt(ev.minimo));
-      
+    if (ev) {      
       setName(ev.nombre);
       setDate(new Date(parseInt(ev.fecha)));
       setPercentage(parseInt(ev.porcentaje));
@@ -84,12 +80,14 @@ function EditEvaluation({ show, onClose, evId }) {
   const { send, status } = useCacheSend('Asignatura', 'editaEvaluacion');
 
   useEffect(() => {
-    if(status === 'success') {
+    if(status === 'success' && clicked) {
       setShowSuccessSnackbar(true);
       onClose();
-    } else if(status === 'error') {
+      setClicked(false);
+    } else if(status === 'error' && clicked) {
       setShowErrorSnackbar(false);
       onClose();
+      setClicked(false);
     }
   }, [status, onClose]);
 
@@ -165,7 +163,10 @@ function EditEvaluation({ show, onClose, evId }) {
               fullWidth
               size="large"
               variant="contained"
-              onClick={() => send(evId, name, new Date(date).getTime(), percentage, minimum)}
+              onClick={() => {
+                send(evId, name, new Date(date).getTime(), percentage, minimum);
+                setClicked(true);
+              }}
             >
               Editar evaluación
             </Button>

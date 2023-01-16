@@ -53,6 +53,7 @@ const MyContainer = styled(Container)(({ theme }) => ({
 function ChangeCoordinator({ show, onClose }) {
 
   const [direction, setDirection] = useState("");
+  const [clicked, setClicked] = useState(false);
 
   const [showSuccessSnackbar, setShowSuccessSnackbar] = useState(false);
   const [showErrorSnackbar, setShowErrorSnackbar] = useState(false);
@@ -62,12 +63,16 @@ function ChangeCoordinator({ show, onClose }) {
   const { send, status } = useCacheSend('Asignatura', 'setCoordinador');
 
   useEffect(() => {
-    if (status === 'success') {
+    if (status === 'success' && clicked) {
       setShowSuccessSnackbar(true);
       onClose();
-    } else if (status === 'error') {
+      setClicked(false);
+      setDirection("");
+    } else if (status === 'error' && clicked) {
       setShowErrorSnackbar(false);
       onClose();
+      setClicked(false);
+      setDirection("");
     }
   }, [status, onClose]);
 
@@ -90,6 +95,7 @@ function ChangeCoordinator({ show, onClose }) {
         onBackdropClick={() => {
           onClose();
           setDirection("");
+          setClicked(false);
         }}
       >
         <RootStyle>
@@ -111,7 +117,10 @@ function ChangeCoordinator({ show, onClose }) {
               fullWidth
               size="large"
               variant="contained"
-              onClick={() => send(direction)}
+              onClick={() => {
+                send(direction);
+                setClicked(true);
+              }}
             >
               Cambiar coordinador
             </Button>

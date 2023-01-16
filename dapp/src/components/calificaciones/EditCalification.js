@@ -50,7 +50,7 @@ const MyContainer = styled(Container)(({ theme }) => ({
   justifyContent: "center",
 }));
 
-function EditCalification({ show, onClose, studentAddress, evId }) {
+function EditCalification({ show, onClose, studentAddress, evId, noteSelected }) {
 
   const { useCacheSend, useCacheCall } = useDrizzle();
 
@@ -58,12 +58,20 @@ function EditCalification({ show, onClose, studentAddress, evId }) {
   const [evName, setEvName] = useState("");
   const [noteType, setNoteType] = useState("");
   const [note, setNote] = useState("");
+  const [clicked, setClicked] = useState(false);
 
   const [showSuccessSnackbar, setShowSuccessSnackbar] = useState(false);
   const [showErrorSnackbar, setShowErrorSnackbar] = useState(false);
 
   const ev = useCacheCall(['Asignatura'], call => evId !== -1 ? call("Asignatura", "evaluaciones", evId) : null);
   const student = useCacheCall(['Asignatura'], call => studentAddress !== "" ? call("Asignatura", "datosAlumno", studentAddress) : null);
+
+  useEffect(() => {
+    if (noteSelected) {
+      setNoteType(noteSelected.tipo);
+      setNote(noteSelected.calificacion);
+    }
+  }, [noteSelected]);
 
   useEffect(() => {
     if (ev) {
@@ -78,12 +86,14 @@ function EditCalification({ show, onClose, studentAddress, evId }) {
   const { send, status } = useCacheSend('Asignatura', 'califica');
 
   useEffect(() => {
-    if (status === 'success') {
+    if (status === 'success' && clicked) {
       setShowSuccessSnackbar(true);
       onClose();
-    } else if (status === 'error') {
+      setClicked(false);
+    } else if (status === 'error' && clicked) {
       setShowErrorSnackbar(false);
       onClose();
+      setClicked(false);
     }
   }, [status, onClose]);
 
@@ -154,7 +164,10 @@ function EditCalification({ show, onClose, studentAddress, evId }) {
               fullWidth
               size="large"
               variant="contained"
-              onClick={() => send(studentAddress, evId, noteType, note)}
+              onClick={() => {
+                send(studentAddress, evId, noteType, note);
+                setClicked(true);
+              }}
             >
               Editar calificación
             </Button>

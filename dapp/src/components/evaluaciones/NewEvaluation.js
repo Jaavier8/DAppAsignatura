@@ -59,6 +59,7 @@ function NewEvaluation({ show, onClose }) {
   const [date, setDate] = useState(new Date());
   const [percentage, setPercentage] = useState(0);
   const [minimum, setMinimum] = useState(0);
+  const [clicked, setClicked] = useState(false);
 
   const [showSuccessSnackbar, setShowSuccessSnackbar] = useState(false);
   const [showErrorSnackbar, setShowErrorSnackbar] = useState(false);
@@ -68,12 +69,22 @@ function NewEvaluation({ show, onClose }) {
   const { send, status } = useCacheSend('Asignatura', 'creaEvaluacion');
 
   useEffect(() => {
-    if (status === 'success') {
+    if (status === 'success' && clicked) {
       setShowSuccessSnackbar(true);
       onClose();
-    } else if (status === 'error') {
+      setClicked(false);
+      setName("");
+      setDate(new Date());
+      setPercentage(0);
+      setMinimum(0);
+    } else if (status === 'error' && clicked) {
       setShowErrorSnackbar(false);
       onClose();
+      setClicked(false);
+      setName("");
+      setDate(new Date());
+      setPercentage(0);
+      setMinimum(0);
     }
   }, [status, onClose]);
 
@@ -95,6 +106,7 @@ function NewEvaluation({ show, onClose }) {
         onClose={onClose}
         onBackdropClick={() => {
           onClose();
+          setClicked(false);
           setName("");
           setDate(new Date());
           setPercentage(0);
@@ -153,7 +165,10 @@ function NewEvaluation({ show, onClose }) {
               fullWidth
               size="large"
               variant="contained"
-              onClick={() => send(name, new Date(date).getTime(), percentage, minimum)}
+              onClick={() => {
+                send(name, new Date(date).getTime(), percentage, minimum);
+                setClicked(true);
+              }}
             >
               Añadir evaluación
             </Button>
